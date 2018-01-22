@@ -23,13 +23,13 @@
 #  ====================================================================
 
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
-set(RESID 256)
+set(RESID 16384)
 set(STRUCT "struct Res { const char *data\; unsigned int size\; }\;")
 
 macro(EMBED_TARGET Name Input)
-	get_filename_component(InputAbs "${Input}" REALPATH BASE_DIR "${CMAKE_SOURCE_DIR}")
+	get_filename_component(InputAbs "${Input}" REALPATH)
 	if(WIN32)
 		set(OutputRC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.rc")
 		set(OutputC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.c")
