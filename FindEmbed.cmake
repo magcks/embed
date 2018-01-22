@@ -12,7 +12,7 @@
 # The macro defines a set of variables:
 #  EMBED_${Name}_DEFINED       - true is the macro ran successfully
 #  EMBED_${Name}_INPUT         - The input source file, an alias for <BinFile>
-#  EMBED_${Name}_OUTPUTS        - The source file generated
+#  EMBED_${Name}_OUTPUTS       - The source file generated
 #
 #  ====================================================================
 #  Example:
@@ -35,7 +35,7 @@ macro(EMBED_TARGET Name Input)
 		set(OutputC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.c")
 		set(Outputs ${OutputRC} ${OutputC})
 		set(RCCODE "#define ${Name} ${RESID}\n${Name} RCDATA \"${InputAbs}\"\n")
-		set(CODE "#include \"windows.h\"\n${STRUCT} struct Res ${Name}() { HMODULE handle = GetModuleHandle(NULL)\; HRSRC res = FindResource(handle, MAKEINTRESOURCE(${RESID}), RT_RCDATA)\; struct Res r = { (const char*)LockResource(LoadResource(handle, res)), SizeofResource(handle, res) }\; return r\; }\n")
+		set(CODE "#include \"windows.h\"\n${STRUCT}\nstruct Res ${Name}() { HMODULE handle = GetModuleHandle(NULL)\; HRSRC res = FindResource(handle, MAKEINTRESOURCE(${RESID}), RT_RCDATA)\; struct Res r = { (const char*)LockResource(LoadResource(handle, res)), SizeofResource(handle, res) }\; return r\; }\n")
 		file(WRITE ${OutputRC} ${RCCODE})
 		file(WRITE ${OutputC} ${CODE})
 		math(EXPR RESID "${RESID}+1")
@@ -45,7 +45,7 @@ macro(EMBED_TARGET Name Input)
 		else()
 			set(Section ".section .rodata")
 		endif()
-		set(CODE "asm(\"${Section}\\n.align ${CMAKE_SIZEOF_VOID_P}\\ndata: .incbin \\\"${InputAbs}\\\"\\nenddata:\\n\")\; ${STRUCT} extern const char data[]\; extern const char enddata[]\; struct Res ${Name}() { struct Res r = { data, enddata - data }\; return r\; }\n")
+		set(CODE "asm(\"${Section}\\n.align ${CMAKE_SIZEOF_VOID_P}\\ndata: .incbin \\\"${InputAbs}\\\"\\nenddata:\\n\")\;\n${STRUCT}\nextern const char data[]\;\nextern const char enddata[]\;\nstruct Res ${Name}() { struct Res r = { data, enddata - data }\; return r\; }\n")
 		set(OutputC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.c")
 		set(Outputs ${OutputC})
 		file(WRITE ${OutputC} ${CODE})
