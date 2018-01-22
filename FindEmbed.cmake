@@ -1,7 +1,8 @@
 # - Provide a macro to embed binary files into the executable.
-# The module defines the following variables:
 #
-#  The module defines the macros:
+# This file is part of the Embed project: https://github.com/magcks/embed
+#
+# The module defines the macros:
 #
 #  EMBED_TARGET(<Name> <BinFile>)
 #
