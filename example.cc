@@ -8,8 +8,8 @@ struct Res {
 };
 
 // The resource functions are defined elsewhere...
-extern "C" Res SHADER_VTX();
-extern "C" Res SHADER_FRAG();
+extern "C" Res SHADER_VTX(void);
+extern "C" Res SHADER_FRAG(void);
 
 int main(int argc, const char **argv)
 {
