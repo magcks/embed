@@ -12,7 +12,7 @@
 # The macro defines a set of variables:
 #  EMBED_${Name}_DEFINED       - true is the macro ran successfully
 #  EMBED_${Name}_INPUT         - The input source file, an alias for <BinFile>
-#  EMBED_${Name}_OUTPUT        - The source file generated
+#  EMBED_${Name}_OUTPUTS        - The source file generated
 #
 #  ====================================================================
 #  Example:
