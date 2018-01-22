@@ -1,5 +1,5 @@
 # Embed
-This CMake module provides a macro to add binary files to your executable or library. It is similar to the (incbin)[https://github.com/graphitemaster/incbin] project.
+This CMake module provides a macro to add binary files to your executable or library. It is similar to the [incbin](https://github.com/graphitemaster/incbin) project.
 
 This module doesn't need any dependencies and code generators. It uses the assembly INCBIN pseudo operation and Resources Files (.rc) on windows.
 
