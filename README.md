@@ -17,9 +17,9 @@ struct Res {
 	const char *data;
 	unsigned int size;
 };
-extern "C" Res SHADER_VTX(void);
+extern "C" Res SHADER(void);
 // ...
-Res vtx = SHADER_VTX(); // use vtx.data, vtx.size
+Res vtx = SHADER(); // use vtx.data, vtx.size
 ```
 
 ## Portability
