@@ -26,7 +26,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 set(RES_ID 16384)
-set(STRUCT "struct Res { const char *data\; unsigned int size\; }\;")
+set(STRUCT "struct Res { const char *data\; const unsigned int size\; }\;")
 
 macro(EMBED_TARGET Name Input)
 	get_filename_component(InputAbs "${Input}" REALPATH)
