@@ -26,7 +26,13 @@
 cmake_minimum_required(VERSION 2.8)
 
 set(RES_ID 16384)
-set(STRUCT "struct Res { const char *data\; const unsigned int size\; }\;")
+set(STRUCT
+"#include \"stddef.h\"
+struct Res {
+	const char *data\;
+	const size_t size\;
+}\;"
+)
 
 macro(EMBED_TARGET Name Input)
 	get_filename_component(InputAbs "${Input}" REALPATH)
@@ -58,13 +64,13 @@ struct Res ${Name}(void) {
 			set(Section ".section .rodata")
 		endif()
 		set(CODE
-"asm(
+"${STRUCT}
+asm(
 	\"${Section}\\n\"
 	\".align ${CMAKE_SIZEOF_VOID_P}\\n\"
 	\"data: .incbin \\\"${InputAbs}\\\"\\n\"
 	\"end_data:\\n\"
 )\;
-${STRUCT}
 extern const char data[]\;
 extern const char end_data[]\;
 struct Res ${Name}(void) {
