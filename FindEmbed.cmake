@@ -59,10 +59,10 @@ struct Res ${Name}(void) {
 		endif()
 		set(CODE
 "asm(
-	\"${Section}\;\"
-	\".align ${CMAKE_SIZEOF_VOID_P}\;\"
-	\"data: .incbin \\\"${InputAbs}\\\"\;\"
-	\"end_data:\"
+	\"${Section}\\n\"
+	\".align ${CMAKE_SIZEOF_VOID_P}\\n\"
+	\"data: .incbin \\\"${InputAbs}\\\"\\n\"
+	\"end_data:\\n\"
 )\;
 ${STRUCT}
 extern const char data[]\;
