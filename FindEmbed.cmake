@@ -25,8 +25,8 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-set(RESID 16384)
-set(STRUCT "struct Res { const char *data\; unsigned int size\; }\;")
+set(RES_ID 16384)
+set(STRUCT "struct Res { const char *data\; const unsigned int size\; }\;")
 
 macro(EMBED_TARGET Name Input)
 	get_filename_component(InputAbs "${Input}" REALPATH)
@@ -34,18 +34,44 @@ macro(EMBED_TARGET Name Input)
 		set(OutputRC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.rc")
 		set(OutputC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.c")
 		set(Outputs ${OutputRC} ${OutputC})
-		set(RCCODE "${RESID} RCDATA \"${InputAbs}\"\n")
-		set(CODE "#include \"windows.h\"\n${STRUCT}\nstruct Res ${Name}(void) { HMODULE handle = GetModuleHandle(NULL)\; HRSRC res = FindResource(handle, MAKEINTRESOURCE(${RESID}), RT_RCDATA)\; struct Res r = { (const char*)LockResource(LoadResource(handle, res)), SizeofResource(handle, res) }\; return r\; }\n")
+		set(RCCODE "${RES_ID} RCDATA \"${InputAbs}\"\n")
+		set(CODE
+"#include \"windows.h\"
+${STRUCT}
+struct Res ${Name}(void) {
+	HMODULE handle = GetModuleHandle(NULL)\;
+	HRSRC res = FindResource(handle, MAKEINTRESOURCE(${RES_ID}), RT_RCDATA)\;
+	struct Res r = {
+		(const char*) LockResource(LoadResource(handle, res)),
+		SizeofResource(handle, res)
+	}\;
+	return r\;
+}"
+		)
 		file(WRITE ${OutputRC} ${RCCODE})
 		file(WRITE ${OutputC} ${CODE})
-		math(EXPR RESID "${RESID}+1")
+		math(EXPR RES_ID "${RES_ID}+1")
 	else()
 		if(APPLE)
 			set(Section ".const_data")
 		else()
 			set(Section ".section .rodata")
 		endif()
-		set(CODE "asm(\"${Section}\\n.align ${CMAKE_SIZEOF_VOID_P}\\ndata: .incbin \\\"${InputAbs}\\\"\\nenddata:\\n\")\;\n${STRUCT}\nextern const char data[]\;\nextern const char enddata[]\;\nstruct Res ${Name}(void) { struct Res r = { data, enddata - data }\; return r\; }\n")
+		set(CODE
+"asm(
+	\"${Section}\\n\"
+	\".align ${CMAKE_SIZEOF_VOID_P}\\n\"
+	\"data: .incbin \\\"${InputAbs}\\\"\\n\"
+	\"end_data:\\n\"
+)\;
+${STRUCT}
+extern const char data[]\;
+extern const char end_data[]\;
+struct Res ${Name}(void) {
+	struct Res r = { data, end_data - data }\;
+	return r\;
+}"
+		)
 		set(OutputC "${CMAKE_CURRENT_BINARY_DIR}/${Name}.c")
 		set(Outputs ${OutputC})
 		file(WRITE ${OutputC} ${CODE})
