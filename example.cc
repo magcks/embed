@@ -16,6 +16,6 @@ int main(int argc, const char **argv)
 {
 	Res vtx = SHADER_VTX();
 	Res frag = SHADER_FRAG();
-	std::cout << "Vertex shader soruce: " << std::endl << std::string(vtx.data, vtx.size) << std::endl;
-	std::cout << "Fragment shader source: " << std::endl << std::string(frag.data, frag.size) << std::endl;
+	std::cout << "Vertex shader soruce: " << std::string(vtx.data, vtx.size) << std::endl;
+	std::cout << "Fragment shader source: " << std::string(frag.data, frag.size) << std::endl;
 }

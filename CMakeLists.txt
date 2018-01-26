@@ -17,3 +17,13 @@ add_executable(example
 	${EMBED_SHADER_VTX_OUTPUTS}
 	${EMBED_SHADER_FRAG_OUTPUTS}
 )
+add_executable(example_inc_c
+	example_include.c
+	${EMBED_SHADER_VTX_OUTPUTS}
+	${EMBED_SHADER_FRAG_OUTPUTS}
+)
+add_executable(example_inc_cpp
+	example_include.cc
+	${EMBED_SHADER_VTX_OUTPUTS}
+	${EMBED_SHADER_FRAG_OUTPUTS}
+)
