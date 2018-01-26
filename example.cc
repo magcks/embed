@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
+#include <cstddef>
 
 // Rename this structs or its member variables however you want.
 struct Res {
 	const char *data;
-	unsigned int size;
+	std::size_t size;
 };
 
 // The resource functions are defined elsewhere...

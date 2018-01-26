@@ -15,7 +15,7 @@ Then use it in your source file like this:
 ```
 struct Res {
 	const char *data;
-	unsigned int size;
+	size_t size;
 };
 extern "C" Res SHADER(void);
 // ...
