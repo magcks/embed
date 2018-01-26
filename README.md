@@ -22,7 +22,7 @@ extern "C" Res SHADER(void);
 Res vtx = SHADER(); // use vtx.data, vtx.size
 ```
 
-Or if you don't care about an additional `#include`, copy the `embed.h` file to your project and use ist like this:
+Or if you don't care about an additional `#include`, copy the `embed.h` file to your project and use it like this:
 ```
 #include "embed.h"
 EMBED_DECL(SHADER);
