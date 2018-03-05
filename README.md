@@ -3,6 +3,11 @@ This CMake module provides a macro to add binary files to your executable or lib
 
 This module doesn't need any dependencies, code generators or `#include`s. It uses the assembly pseudo operation `INCBIN` and Resources Files (.rc) on windows.
 
+## Quick install
+```
+wget https://raw.githubusercontent.com/magcks/embed/master/FindEmbed.cmake https://raw.githubusercontent.com/magcks/embed/master/embed.h
+```
+
 ## How to use
 Just copy the `FindEmbed.cmake` file into the module directory of your project and add the corresponding lines to your `CMakeLists.txt`:
 ```
